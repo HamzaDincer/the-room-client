@@ -9,6 +9,7 @@ function App() {
 
   const [roomId, setRoomId] = useState(123);
   const [userId, setUserId] = useState("");
+  const [caption, setCaption] = useState(null)
   const socketRef = useRef(null);
   const videoGridRef = useRef(null);
 
@@ -21,20 +22,29 @@ function App() {
     stopSpeechToText,
   } = useSpeechToText({
     continuous: true,
-    useLegacyResults: false
+    useLegacyResults: false,
+    lang: "en-US",
   });
+
+
 
   useEffect(() => {
 
     socketRef.current = io("https://1fc69763244a.ngrok.app");
-    
+
     socketRef.current.on('room-created', (roomId) => {
       setRoomId(roomId);
     });
-  
+
+    socketRef.current.on('caption', (roomId, userId, caption) => {
+      const video = document.getElementById(userId);
+      const captionElement = video.nextElementSibling;
+      captionElement.textContent = caption;
+    });
+
     const myPeer = new Peer();
 
-    const videoGrid = videoGridRef.current; // Move the declaration here
+    const videoGrid = videoGridRef.current; 
   
     myPeer.on('open', (id) => {
       setUserId(id);
@@ -83,22 +93,53 @@ function App() {
       const video = document.createElement('video');
       video.classList.add('col-3');
       video.id = userId;
-  
+    
       call.on('stream', (userVideoStream) => {
         addVideoStream(video, userVideoStream);
       });
-  
+    
       call.on("error", (err) => {
         console.log(err);
       });
+      
+      // Add the new video element to the video grid
+      videoGridRef.current.append(video);
     }
   
     function addVideoStream(video, stream) {
+
+      console.log(stream);
       video.srcObject = stream;
       video.addEventListener('loadedmetadata', () => {
-        video.play()
+        video.play();
       });
-      videoGrid.append(video); // Access the videoGrid variable here
+    
+      const videoContainer = document.createElement('div');
+      videoContainer.classList.add('video-container');
+      videoContainer.appendChild(video);
+    
+      const videoCaption = document.createElement('div');
+      videoCaption.classList.add('video-caption');
+      videoCaption.id = `caption`;
+      videoContainer.appendChild(videoCaption);
+    
+      videoGrid.appendChild(videoContainer);
+
+      if (!isRecording) {
+        startSpeechToText();
+      }
+
+      console.log(results);
+      // Find the caption element for this video element
+      // Find the caption element for this video element
+      const captionElement = document.getElementById(`caption`);
+      setCaption(results[results.length - 1]);
+      if (caption) {
+        captionElement.textContent = caption.transcript;
+    
+        // Emit the updated caption to the server
+        socketRef.current.emit('caption', roomId, userId, caption.transcript);
+      }
     }
   
     function addMessage(msgtxt) {
@@ -113,7 +154,18 @@ function App() {
       myPeer.disconnect();
     }
   }, []);
-  
+
+  useEffect(() => {
+
+    const newCaption = results[results.length - 1];
+    console.log(results);
+    setCaption(newCaption);
+
+    const captionElement = document.getElementById(`caption`);
+    if (newCaption && newCaption.transcript) {
+      captionElement.textContent = newCaption.transcript;
+    }
+  }, [results]);
 
   return (
     <>
@@ -132,18 +184,6 @@ function App() {
           </div>
         </div>
       </div>
-      <div>
-      <h1>Recording: {isRecording.toString()}</h1>
-      <button onClick={isRecording ? stopSpeechToText : startSpeechToText}>
-        {isRecording ? 'Stop Recording' : 'Start Recording'}
-      </button>
-      <ul>
-        {results.map((result) => (
-          <li key={result.timestamp}>{result.transcript}</li>
-        ))}
-        {interimResult && <li>{interimResult}</li>}
-      </ul>
-    </div>
     </>
   );
 }
