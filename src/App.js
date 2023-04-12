@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useSpeechToText from 'react-hook-speech-to-text';
 import './App.scss';
-import VideoGrid from './components/VideoBox';
+import VideoGrid from './components/VideoBox/VideoBox';
 import { socket, peer } from './socket';
 
 
