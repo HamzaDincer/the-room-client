@@ -6,13 +6,33 @@ import logo from "../../assets/TheRoom.jpeg"
 function HomePage() {
   const [roomName, setRoomName] = useState('');
   const [userName, setUserName] = useState('');
+  const [roomID, setRoomId] = useState('')
   const navigate = useNavigate();
+
+  const handleCreateRoom = (e) => {
+    e.preventDefault();
+    if (!roomName || !userName) {
+      alert("Please enter both room name and user name.");
+      return;
+    }
+    if (roomName.length < 3 || roomName.length > 10) {
+      alert("Room name must be between 3 and 10 characters.");
+      return;
+    }
+    if (userName.length < 3 || userName.length > 10) {
+      alert("User name must be between 3 and 10 characters.");
+      return;
+    }
+    navigate(`/room/${roomName}`, { state: { userName } });
+  };
 
   const handleJoinRoom = (e) => {
     e.preventDefault();
-    if (roomName && userName) {
-      navigate(`/room`);
+    if (!roomID) {
+      alert("Please enter  room ID");
+      return;
     }
+    navigate(`/room/${roomName}`, { state: { userName } });
   };
 
   return (
@@ -20,7 +40,7 @@ function HomePage() {
       <div className="homepage__header">
         <img className="homepage__logo" src={logo} alt="TheRoom Logo" />
       </div>
-      <form className="homepage__form" onSubmit={handleJoinRoom}>
+      <form className="homepage__form" onSubmit={handleCreateRoom}>
         <input
           className="homepage__input"
           type="text"
@@ -36,6 +56,16 @@ function HomePage() {
           onChange={(e) => setUserName(e.target.value)}
         />
         <button className="homepage__button" type="submit">Create My Room</button>
+      </form>
+      <form className="homepage__form" onSubmit={handleJoinRoom}>
+        <input
+          className="homepage__input"
+          type="text"
+          placeholder="Enter Room ID"
+          value={roomID}
+          onChange={(e) => setRoomId(e.target.value)}
+        />
+        <button className="homepage__button" type="submit">Join Room</button>
       </form>
     </div>
   );
