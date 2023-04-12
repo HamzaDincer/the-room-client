@@ -3,12 +3,13 @@ import useSpeechToText from 'react-hook-speech-to-text';
 import './App.scss';
 import RoomPage from './pages/RoomPage/RoomPage';
 import { socket, peer } from './socket';
+import HomePage from './pages/HomePage/HomePage';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element ={<RoomPage/>}></Route>
+        <Route path="/" element ={<HomePage/>}></Route>
         <Route path="/room" element ={<RoomPage/>}></Route>
       </Routes>
     </BrowserRouter>
