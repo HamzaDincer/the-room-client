@@ -11,7 +11,7 @@ function HomePage() {
   const handleJoinRoom = (e) => {
     e.preventDefault();
     if (roomName && userName) {
-      navigate(`/room/${roomName}?name=${userName}`);
+      navigate(`/room`);
     }
   };
 

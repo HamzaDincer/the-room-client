@@ -13,19 +13,19 @@ $background-color: #fff;
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
+  }
 
     &__logo {
-      height: 3rem;
-      margin-right: 1rem;
+        margin-left: 3rem;
     }
 
     &__title {
-      font-size: 3rem;
-      font-weight: bold;
-      color: $primary-color;
-      margin: 0;
+        font-size: 3rem;
+        font-weight: bold;
+        color: $primary-color;
+        margin: 0;
     }
-  }
+  
 
   &__form {
     display: flex;
@@ -36,8 +36,10 @@ $background-color: #fff;
     padding: 2rem;
     border-radius: 0.25rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
 
     &__input {
+      font-family: 'Verdana';
       display: block;
       width: 100%;
       padding: 0.75rem;
@@ -58,11 +60,12 @@ $background-color: #fff;
     }
 
     &__button {
+        font-family: 'Verdana';
       display: inline-block;
       width: 100%;
       padding: 0.75rem;
       font-size: 1rem;
       font-weight: normal
     }
-    }
 }
+
