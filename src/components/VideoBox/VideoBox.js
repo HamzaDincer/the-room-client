@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { socket, peer } from '../../socket';
 import "./VideoBox.scss"
-
 function VideoBox(props){
 
     const [videoStream, setVideoStream] = useState(props.src);

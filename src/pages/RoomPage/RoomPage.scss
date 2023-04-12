@@ -43,7 +43,7 @@ $secondary-color: #666666;
 }
 
 h1 {
-  color: $primary-color;
+  color: black;
   font-size: 36px;
   font-weight: bold;
   text-align: center;
@@ -93,7 +93,7 @@ button {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
 // Global variables
-$primary-color: #FF6E6C;
+$primary-color: #fafafa;
 $secondary-color: #3D3D3D;
 
 // Global styles
@@ -109,10 +109,21 @@ $secondary-color: #3D3D3D;
   padding: 20px;
   background-color: $primary-color;
   color: #fff;
+  display: flex;
+  justify-content: space-between;
+  
+  img {
+    height: 8rem;
+    align-self: right
+    ;
+  }
+
 
   h1 {
-    font-size: 28px;
+    font-size: 22px;
+    margin: 0;
     font-weight: 700;
+    align-self: center;
   }
 
   h2 {
@@ -200,6 +211,8 @@ $secondary-color: #3D3D3D;
 
 // Chat container
 #chat-container {
+  display: flex;
+  flex-direction: column;
   margin: 1rem;
   position: relative;
   width: 100%;
@@ -213,7 +226,7 @@ $secondary-color: #3D3D3D;
 #chat-screen {
   height: 300px;
   padding: 20px;
-  overflow-y: scroll;
+  overflow: auto;
 
   p {
     margin-bottom: 10px;
@@ -227,7 +240,36 @@ $secondary-color: #3D3D3D;
   }
 }
 
+.chat__input {
+  display: flex;
+  gap: 1rem;
+}
+
 #chat-input {
   padding: 10px;
   background-color: #f5f5f5;
+  width: 95%;
+  border: 1px solid grey;
+  border-radius: 10px;
+  align-self: center;
 }
+
+.message-container {
+  margin-bottom: 10px;
+}
+
+.message-right {
+  text-align: right;
+}
+
+.message-left {
+  text-align: left;
+}
+
+@media (max-width: 1280px) {
+  #chat-container  {
+    max-width: 800px;
+    height: 20rem;
+  }
+}
+
