@@ -12,6 +12,7 @@ function App() {
   const [caption, setCaption] = useState(null)
   const socketRef = useRef(null);
   const videoGridRef = useRef(null);
+  
 
   const {
     error,
@@ -30,18 +31,19 @@ function App() {
 
   useEffect(() => {
 
-    socketRef.current = io("https://1fc69763244a.ngrok.app");
+    socketRef.current = io("https://e096d04e78dc.ngrok.app");
 
     socketRef.current.on('room-created', (roomId) => {
       setRoomId(roomId);
     });
 
-    socketRef.current.on('caption', (roomId, userId, caption) => {
-      const video = document.getElementById(userId);
-      const captionElement = video.nextElementSibling;
+    socketRef.current.on('caption-update', (roomId, userId, caption) => {
+      const captionElement = document.getElementById(`caption`);
       captionElement.textContent = caption;
     });
+    socketRef.current.emit('caption', roomId, userId, caption);
 
+  
     const myPeer = new Peer();
 
     const videoGrid = videoGridRef.current; 
@@ -107,8 +109,6 @@ function App() {
     }
   
     function addVideoStream(video, stream) {
-
-      console.log(stream);
       video.srcObject = stream;
       video.addEventListener('loadedmetadata', () => {
         video.play();
@@ -124,23 +124,23 @@ function App() {
       videoContainer.appendChild(videoCaption);
     
       videoGrid.appendChild(videoContainer);
-
+    
       if (!isRecording) {
         startSpeechToText();
       }
-
-      console.log(results);
-      // Find the caption element for this video element
-      // Find the caption element for this video element
-      const captionElement = document.getElementById(`caption`);
-      setCaption(results[results.length - 1]);
-      if (caption) {
-        captionElement.textContent = caption.transcript;
+    
+      const newCaption = results[results.length - 1];
+      setCaption(newCaption);
+    
+      const captionElement = videoCaption;
+      if (newCaption && newCaption.transcript) {
+        captionElement.textContent = newCaption.transcript;
     
         // Emit the updated caption to the server
-        socketRef.current.emit('caption', roomId, userId, caption.transcript);
+        socketRef.current.emit('caption', roomId, userId, newCaption.transcript);
       }
     }
+    
   
     function addMessage(msgtxt) {
       const chatbox = document.getElementById("chatbox");
@@ -169,20 +169,18 @@ function App() {
 
   return (
     <>
-      <h1>Video Room - <span id="roomID">{roomId}</span></h1>
-      <h2>User: <span id="userID">{userId}</span></h2>
-
+      <h1>Hamza's Room </h1>
       <div className="container">
         <div className="row">
           <div className="col-7">
             <div id="video-grid" className="row" ref={videoGridRef}>
             </div>
           </div>
-          <div className="col-5">
+        </div>
+        <div className="col-5">
             <div id="chatbox">
             </div>
           </div>
-        </div>
       </div>
     </>
   );
