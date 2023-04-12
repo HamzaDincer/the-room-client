@@ -17,6 +17,7 @@ $background-color: #fff;
 
     &__logo {
         margin-left: 3rem;
+        height: 18rem;
     }
 
     &__title {
@@ -25,13 +26,28 @@ $background-color: #fff;
         color: $primary-color;
         margin: 0;
     }
-  
 
   &__form {
     display: flex;
+    width: 90%;
+    gap: 1rem;
+  }  
+
+  &__form-join {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30rem;
+    width: 50%;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  &__form-create {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
     background-color: #fff;
     padding: 2rem;
     border-radius: 0.25rem;

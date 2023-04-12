@@ -9,31 +9,6 @@ function RoomPage() {
 
   const [myVideoStream, setMyVideoStream] = useState(null);
 
-  // useEffect(() => {
-
-  //   async function enableStream() {
-  //     try{
-  //       navigator.mediaDevices.getUserMedia({
-  //           video: true,
-  //           audio: true
-  //       }).then(stream => {
-  //         setMyVideoStream(stream);
-  //         console.log("Log: your Video Stream has loaded.");
-  //       });
-  //     }catch(err){
-  //       console.log("Error: " + err);
-  //     }
-  //   }
-
-  //   if (!myVideoStream) {
-  //     enableStream();
-  //   }else{
-  //     console.log("Log: your Video Stream not loaded.");
-  //   }
-
-
-  // }, []);
-
 
   if(!myVideoStream){
                         
@@ -46,12 +21,10 @@ function RoomPage() {
     });
   }
 
-
   return (
     <>
       <div id="header">
         <h1>Room - <span id="roomID"></span></h1>
-        <h2>User: <span id="userID"></span></h2>
       </div>
       <div id="main">
           <div id="video-container">

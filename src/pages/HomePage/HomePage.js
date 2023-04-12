@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.scss';
 import logo from "../../assets/TheRoom.jpeg"
+import { socket, peer } from '../../socket';
 
 function HomePage() {
+
   const [roomName, setRoomName] = useState('');
   const [userName, setUserName] = useState('');
-  const [roomID, setRoomId] = useState('')
+  const [guestName, setGuestName] = useState('');
+  const [roomID, setRoomId] = useState('');
+
   const navigate = useNavigate();
 
   const handleCreateRoom = (e) => {
@@ -23,24 +27,28 @@ function HomePage() {
       alert("User name must be between 3 and 10 characters.");
       return;
     }
+     socket.emit('create-room', { roomName, userName });
     navigate(`/room/${roomName}`, { state: { userName } });
   };
 
   const handleJoinRoom = (e) => {
     e.preventDefault();
     if (!roomID) {
-      alert("Please enter  room ID");
+      alert("Please enter a room ID.");
       return;
     }
+    socket.emit('join-room-by-id', roomID, userName);
     navigate(`/room/${roomName}`, { state: { userName } });
   };
+    
 
   return (
     <div className="homepage">
       <div className="homepage__header">
         <img className="homepage__logo" src={logo} alt="TheRoom Logo" />
       </div>
-      <form className="homepage__form" onSubmit={handleCreateRoom}>
+      <div className='homepage__form'>
+      <form className="homepage__form-create" onSubmit={handleCreateRoom}>
         <input
           className="homepage__input"
           type="text"
@@ -57,7 +65,7 @@ function HomePage() {
         />
         <button className="homepage__button" type="submit">Create My Room</button>
       </form>
-      <form className="homepage__form" onSubmit={handleJoinRoom}>
+      <form className="homepage__form-join" onSubmit={handleJoinRoom}>
         <input
           className="homepage__input"
           type="text"
@@ -65,8 +73,16 @@ function HomePage() {
           value={roomID}
           onChange={(e) => setRoomId(e.target.value)}
         />
+        <input
+          className="homepage__input"
+          type="text"
+          placeholder="Enter Your Name"
+          value={guestName}
+          onChange={(e) => setGuestName(e.target.value)}
+        />
         <button className="homepage__button" type="submit">Join Room</button>
       </form>
+      </div>
     </div>
   );
 }
