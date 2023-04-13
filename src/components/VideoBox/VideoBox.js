@@ -20,9 +20,8 @@ function VideoBox(props){
 
 
     return (
-        <div className="video-box">
-            <video className="video-stream" ref={videoRef} />
-            <div className="video-caption">{userID}</div>
+        <div className="video-box" >
+            <video className="video-stream" ref={videoRef} muted={props.isLocal}  />
         </div>
     );
 
@@ -109,9 +108,9 @@ export default function VideoGrid(props){
     return(
         <>
         <div id="video-grid" className="">
-            <VideoBox src={myVideoStream} muted />
+            <VideoBox src={myVideoStream} isLocal muted/>
             {videoSources.map(source => (
-                <VideoBox key={myVideoStream.id} src={source}  muted/>
+                <VideoBox key={myVideoStream.id} src={source} isLocal={false}/>
             ))}
         </div>
         <SpeechToText />

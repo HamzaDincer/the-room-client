@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useSpeechToText from 'react-hook-speech-to-text';
-import './SpeechToText.scss'
+import './SpeechToText.scss';
+import { socket } from '../../socket';
 
 export default function SpeechToText() {
   const [text, setText] = useState(' Caption Here');
@@ -16,13 +17,18 @@ export default function SpeechToText() {
     useLegacyResults: false,
   });
 
-
   useEffect(() => {
     if (results && results.length > 0) {
-      setText(results[results.length - 1].transcript);
-      console.log(text);
+      const latestTranscript = results[results.length - 1].transcript;
+      setText(latestTranscript);
+
+      socket.emit('caption-message', { message: latestTranscript });
     }
-  }, [results, text]);
+    socket.on('caption-message', message => {
+        setText(message)
+    }) 
+
+  }, [results]);
 
   if (error) return <p>Web Speech API is not available in this browser 🤷‍</p>;
 
