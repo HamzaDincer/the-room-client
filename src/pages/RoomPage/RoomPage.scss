@@ -105,7 +105,7 @@ $secondary-color: #3D3D3D;
 
 // Header
 #header {
-  padding: 20px;
+  padding: 0 20px;
   background-color: $primary-color;
   color: #fff;
   display: flex;
@@ -213,11 +213,10 @@ $secondary-color: #3D3D3D;
 #chat-container {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 1rem 0;
   position: relative;
   width: 100%;
   max-width: 400px;
-  margin-left: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
