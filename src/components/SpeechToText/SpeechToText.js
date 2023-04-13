@@ -4,7 +4,7 @@ import './SpeechToText.scss';
 import { socket } from '../../socket';
 
 export default function SpeechToText() {
-  const [text, setText] = useState(' Caption Here');
+  const [text, setText] = useState(' [Caption Here]');
   const {
     error,
     interimResult,

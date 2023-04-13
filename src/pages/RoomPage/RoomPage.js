@@ -14,6 +14,7 @@ function RoomPage() {
   const [myVideoStream, setMyVideoStream] = useState(null);
   const [messages, setMessages] = useState([]);
   const [transcription, setTranscription] = useState('');
+  const [isAccessGranted, setIsAccessGranted] = useState(false);
   
 
   const handleSend = () => {
@@ -35,12 +36,14 @@ function RoomPage() {
   if(!myVideoStream){
                         
     navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
+      video: true,
+      audio: true
     }).then(stream => {
       setMyVideoStream(stream);
+      setIsAccessGranted(true); // Set the flag to indicate access has been granted
       console.log("Video stream has loaded.");
     });
+    
   }
 
   return (
@@ -55,7 +58,7 @@ function RoomPage() {
       <div id="main">
           <div id="video-container">
             
-            <VideoGrid myVideoStream={myVideoStream} />
+            <VideoGrid myVideoStream={myVideoStream} isAccessGranted={isAccessGranted} />
             
             <div id="video-controls">
 

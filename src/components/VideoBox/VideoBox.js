@@ -42,6 +42,11 @@ export default function VideoGrid(props){
         // When we receive call from others
         // (This happens from every other users when we join a room)
         peer.on('call', call => { 
+
+            if (!props.isAccessGranted) {
+                console.log('Camera and microphone access has not been granted yet.');
+                return;
+              }
     
             // Stream them our video/audio
             call.answer(myVideoStream.stream) 
@@ -68,8 +73,10 @@ export default function VideoGrid(props){
 
             // Call the new user
             const call = peer.call(userId, myVideoStream.stream);
+            console.log('user connected')
     
             call.on("stream", userVideoStream => {
+                console.log('received new user' )
                 setVideoSources([ ...videoSources, {'id': userId , 'stream':userVideoStream}]);
             });
     
