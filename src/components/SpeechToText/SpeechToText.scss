@@ -1,0 +1,9 @@
+.caption {
+    display: flex;
+    background-color: #282c34;
+
+    &__text{
+        align-self: center;
+        color: white;
+    }
+}

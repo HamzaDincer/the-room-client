@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { socket, peer } from '../../socket';
 import "./VideoBox.scss"
+import SpeechToText from '../../components/SpeechToText/SpeechToText';
 function VideoBox(props){
 
     const [videoStream, setVideoStream] = useState(props.src);
@@ -106,13 +107,15 @@ export default function VideoGrid(props){
     }, [videoSources, props.myVideoStream]);
 
     return(
+        <>
         <div id="video-grid" className="">
-            <VideoBox src={myVideoStream} muted/>
+            <VideoBox src={myVideoStream} muted />
             {videoSources.map(source => (
-                <VideoBox src={source}/>
+                <VideoBox key={myVideoStream.id} src={source}  muted/>
             ))}
-            {/* {listVideoBoxes} */}
         </div>
+        <SpeechToText />
+        </>
     );
 
 };

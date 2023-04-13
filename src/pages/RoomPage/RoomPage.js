@@ -8,10 +8,12 @@ import {Link} from 'react-router-dom'
 
 
 
+
 function RoomPage() {
 
   const [myVideoStream, setMyVideoStream] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [transcription, setTranscription] = useState('');
   
 
   const handleSend = () => {
@@ -79,8 +81,8 @@ function RoomPage() {
           <input type="text" id="chat-input" placeholder="Type your message here" />
           <button id="send-btn" onClick={handleSend}>Send</button>
           </div>
+        </div>
         
-          </div>
       </div>
     </>
   );
