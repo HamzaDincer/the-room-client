@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import useSpeechToText from 'react-hook-speech-to-text';
 import './App.scss';
 import RoomPage from './pages/RoomPage/RoomPage';
-import { socket, peer } from './socket';
 import HomePage from './pages/HomePage/HomePage';
 
 function App() {

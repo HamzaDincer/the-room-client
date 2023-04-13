@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.scss';
 import logo from "../../assets/TheRoom.jpeg"
-import { socket, peer } from '../../socket';
+import { socket } from '../../socket';
 
 function HomePage() {
 

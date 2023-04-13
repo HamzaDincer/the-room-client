@@ -9,7 +9,6 @@ export default function SpeechToText() {
     error,
     interimResult,
     isRecording,
-    results,
     startSpeechToText,
     stopSpeechToText,
   } = useSpeechToText({
@@ -25,14 +24,14 @@ export default function SpeechToText() {
     if (interimResult && interimResult.length > 0) {
       setText(interimResult);
       console.log(interimResult);
-
+      const latestTranscript = interimResult;
       socket.emit('caption-message', { message: latestTranscript });
     }
     socket.on('caption-message', message => {
         setText(message)
     }) 
 
-  }, [results]);
+  });
 
   if (error) return <p>Web Speech API is not available in this browser 🤷‍</p>;
 

@@ -4,9 +4,7 @@ import "./VideoBox.scss"
 import SpeechToText from '../../components/SpeechToText/SpeechToText';
 function VideoBox(props){
 
-    const [videoStream, setVideoStream] = useState(props.src);
     const videoRef = useRef(null);
-    let userID = props.src.id ;
 
     useEffect(() => {
 
@@ -53,7 +51,7 @@ export default function VideoGrid(props){
 
             call.on('stream', userVideoStream => { 
                 setVideoSources(videoSources => {
-                    if(!videoSources.some(e => e.id == call.peer)){
+                    if(!videoSources.some(e => e.id === call.peer)){
                         return [ ...videoSources,{'id': call.peer , 'stream':userVideoStream}];
                     }else{
                        return videoSources;
@@ -110,7 +108,7 @@ export default function VideoGrid(props){
         
         };
 
-    }, [videoSources, props.myVideoStream]);
+    });
 
     return(
         <>
