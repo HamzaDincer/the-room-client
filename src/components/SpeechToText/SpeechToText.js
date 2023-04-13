@@ -22,9 +22,8 @@ export default function SpeechToText() {
   });
 
   useEffect(() => {
-    if (results && results.length > 0) {
-      const latestTranscript = results[results.length - 1].transcript;
-      setText(latestTranscript);
+    if (interimResult && interimResult.length > 0) {
+      setText(interimResult);
       console.log(interimResult);
 
       socket.emit('caption-message', { message: latestTranscript });
@@ -42,7 +41,6 @@ export default function SpeechToText() {
       <button onClick={isRecording ? stopSpeechToText : startSpeechToText}>
         {isRecording ? 'Stop Caption' : 'Start Caption'}
       </button>
-      <p className='caption__text'>{text}</p>
       {interimResult && <p className='caption__text'>{interimResult}</p>}
     </div>
   );
