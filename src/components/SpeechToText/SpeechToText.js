@@ -24,11 +24,10 @@ export default function SpeechToText() {
     if (interimResult && interimResult.length > 0) {
       setText(interimResult);
       console.log(interimResult);
-      const latestTranscript = interimResult;
-      socket.emit('caption-message', { message: latestTranscript });
+      socket.emit('caption-message', { message: interimResult });
     }
     socket.on('caption-message', message => {
-        setText(message)
+        setText(message);
     }) 
 
   });
@@ -40,7 +39,7 @@ export default function SpeechToText() {
       <button onClick={isRecording ? stopSpeechToText : startSpeechToText}>
         {isRecording ? 'Stop Caption' : 'Start Caption'}
       </button>
-      {interimResult && <p className='caption__text'>{interimResult}</p>}
+      {text && <p className='caption__text'>{text}</p>}
     </div>
   );
 }
