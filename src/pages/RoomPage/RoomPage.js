@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import useSpeechToText from 'react-hook-speech-to-text';
+import React, { useEffect, useState } from 'react';
 import './RoomPage.scss';
 import VideoGrid from '../../components/VideoBox/VideoBox';
-import { socket, peer } from '../../socket';
+import { socket } from '../../socket';
 import logo from "../../assets/TheRoom.jpeg"
 import { Link, useLocation } from 'react-router-dom';
 
@@ -10,7 +9,6 @@ function RoomPage() {
 
   const [myVideoStream, setMyVideoStream] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [transcription, setTranscription] = useState('');
   const [isAccessGranted, setIsAccessGranted] = useState(false);
 
   const location = useLocation();
