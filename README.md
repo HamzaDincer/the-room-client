@@ -7,7 +7,7 @@ Getting Started
 To get started with the app, clone the repo and install the dependencies:
 
 Usage
-Once the app is running, users can join a video chat room by entering a unique room ID. Users can turn their video/audio on/off using the buttons in the bottom left corner of the screen. The chat feature allows users to send messages to each other in real-time.
+Once the app is running, users can join a video chat room by entering a unique room ID. Users can turn their video/audio on/off using the buttons in the bottom left corner of the screen. The chat feature allows users to send messages to each other in realtime.
 
 The speech-to-text caption feature can be activated by clicking the "Start Caption" button in the bottom right corner of the screen. The app will listen to the user's speech and display real-time captions in the chat window.
 
