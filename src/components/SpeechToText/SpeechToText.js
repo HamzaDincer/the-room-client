@@ -4,7 +4,7 @@ import './SpeechToText.scss';
 import { socket } from '../../socket';
 
 export default function SpeechToText() {
-  const [text, setText] = useState(' [Caption Here]');
+  const [text, setText] = useState('');
   const {
     error,
     interimResult,
@@ -15,12 +15,17 @@ export default function SpeechToText() {
   } = useSpeechToText({
     continuous: true,
     useLegacyResults: false,
+    speechRecognitionProperties: {
+      lang: 'en-US',
+      interimResults: true // Allows for displaying real-time speech results
+    }
   });
 
   useEffect(() => {
     if (results && results.length > 0) {
       const latestTranscript = results[results.length - 1].transcript;
       setText(latestTranscript);
+      console.log(interimResult);
 
       socket.emit('caption-message', { message: latestTranscript });
     }
@@ -38,6 +43,7 @@ export default function SpeechToText() {
         {isRecording ? 'Stop Caption' : 'Start Caption'}
       </button>
       <p className='caption__text'>{text}</p>
+      {interimResult && <p className='caption__text'>{interimResult}</p>}
     </div>
   );
 }
